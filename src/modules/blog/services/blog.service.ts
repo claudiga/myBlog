@@ -27,12 +27,11 @@ export class BlogService {
                     {
                     let resp = Object.keys(posts).reduce((acc,val) => {
 
-                        let v = posts[val]
+                        let v = posts[val] as Post
                         v.id = val
                         return acc.concat(v)
                     
                     },new Array<Post>())
-                    console.log(resp)
                 return resp;    
                 })
             );
