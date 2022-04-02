@@ -38,13 +38,13 @@ export class AuthService {
         const app = initializeApp(firebaseConfig);
 
         const auth = getAuth();
-let authd = signInWithEmailAndPassword(auth, "claudeclodi@hotmail.co.uk", "claudiga")
+let authd = signInWithEmailAndPassword(auth, "claudeclodi@hotmail.co.uk", loginPayload.password)
 
             return from(authd)
             .pipe(
                 switchMap(
                     (loginResults): Observable<User> =>
-                    {console.log(loginResults)
+                    {
                      return this.authUtilsService.processToken$(from(loginResults.user.getIdToken()))
                     }),
                 switchMap(user => {
