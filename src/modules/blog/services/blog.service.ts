@@ -21,12 +21,10 @@ export class BlogService {
 
     getPosts$(): Observable<Post[]> {
         return this.http
-            .get<ResultsPost[]>(`${this.configService.config.sbCleanBlogNodeURL}/myblog/posts.json`)
+            .get<any>(`${this.configService.config.sbCleanBlogNodeURL}/myblog/posts.json`)
             .pipe(
                 map(posts =>
-                    (posts as Post[]).map(post => {
-                        return post;
-                    })
+                    Object.keys(posts).reduce((acc,val) => acc.concat(posts[val]),new Array<Post>())
                 )
             );
     }

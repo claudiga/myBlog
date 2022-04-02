@@ -29,12 +29,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.posts$ = this.blogService.getPosts$();
 
-        // this.subscription.add(
-        //     this.authUtilsService.isLoggedIn$().subscribe(isLoggedIn => {
-        //         this.isLoggedIn = isLoggedIn;
-        //         this.changeDetectorRef.detectChanges();
-        //     })
-        // );
+        this.subscription.add(
+            this.authUtilsService.isLoggedIn$().subscribe(isLoggedIn => {
+                this.isLoggedIn = isLoggedIn;
+                this.changeDetectorRef.detectChanges();
+            })
+        );
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
