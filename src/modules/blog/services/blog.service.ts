@@ -46,7 +46,7 @@ export class BlogService {
     createPost$(payload: CreatePostPayload): Observable<Post | Error> {
         return this.http
             .post<ResultsPost>(
-                `${this.configService.config.sbCleanBlogNodeURL}/api/latest/posts`,
+                `${this.configService.config.sbCleanBlogNodeURL}/myblog/posts.json`,
                 payload
             )
             .pipe(
@@ -58,7 +58,7 @@ export class BlogService {
     updatePost$(post: Post, payload: UpdatePostPayload): Observable<undefined | Error> {
         return this.http
             .put<undefined>(
-                `${this.configService.config.sbCleanBlogNodeURL}/api/latest/posts/${post.id}`,
+                `${this.configService.config.sbCleanBlogNodeURL}/myblog/posts/${post.id}.json`,
                 payload
             )
             .pipe(tap(response => this.router.navigate([`/${post.slug}`])));
