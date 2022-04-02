@@ -24,15 +24,17 @@ export class BlogService {
             .get<any>(`${this.configService.config.sbCleanBlogNodeURL}/myblog/posts.json`)
             .pipe(
                 map(posts =>
-                    {console.log(posts)
-                    return Object.keys(posts).reduce((acc,val) => {
+                    {
+                    let resp = Object.keys(posts).reduce((acc,val) => {
 
                         let v = posts[val]
                         v.id = val
                         return acc.concat(v)
                     
                     },new Array<Post>())
-                    })
+                    console.log(resp)
+                return resp;    
+                })
             );
     }
 
