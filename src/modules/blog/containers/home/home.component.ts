@@ -12,7 +12,6 @@ import { Observable, Subscription } from 'rxjs';
 
 @Component({
     selector: 'sb-home',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './home.component.html',
     styleUrls: ['home.component.scss'],
 })
