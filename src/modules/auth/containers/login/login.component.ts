@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@modules/auth/services';
 
+
+
 @Component({
     selector: 'sb-login',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,9 +16,15 @@ export class LoginComponent implements OnInit {
     });
 
     constructor(private fb: FormBuilder, private authService: AuthService) {}
-    ngOnInit() {}
+    ngOnInit() {
+
+  
+    }
 
     onSubmit() {
+
+
+
         if (this.loginForm.status === 'VALID') {
             this.authService
                 .login$({

@@ -1,8 +1,10 @@
+import { tokenName } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UtilityService } from '@common/services';
 import { Token } from '@start-bootstrap/sb-clean-blog-shared-types';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { User } from '../models';
 
@@ -20,7 +22,7 @@ export class AuthUtilsService {
     bearerToken(): string | false {
         const token = this._jwtIsValid();
         if (token) {
-            return `bearer ${token}`;
+            return `${token}`;
         }
         return false;
     }
@@ -39,15 +41,23 @@ export class AuthUtilsService {
         return throwError(new Error('INVALID_JWT'));
     }
 
-    processToken$(token: Token): Observable<User> {
+    processToken$(token: Observable<String>): Observable<User> {
         if (!token) {
             return throwError(new Error('NO_TOKEN'));
         }
 
-        this._storeToken(token);
-        const tokenPayload = this._decodeToken(token);
+       return token.pipe(
+  map(data=>{
+                
+                const tokenPayload = this._decodeToken(data.toString());
+                this._storeToken(data.toString());
 
-        return of(tokenPayload);
+return tokenPayload
+            })
+  
+        )
+
+
     }
 
     _decodeToken(token: Token): User {
@@ -57,14 +67,6 @@ export class AuthUtilsService {
 
     decodeToken$(token: Token): Observable<User> {
         return of(this._decodeToken(token));
-    }
-
-    _storeToken(token: Token) {
-        return this.util.localStorage.setItem('sb-clean-blog|token', token);
-    }
-
-    removeTokens() {
-        return this.util.localStorage.removeItem('sb-clean-blog|token');
     }
 
     postOptionsAuthHeaders() {
@@ -77,6 +79,7 @@ export class AuthUtilsService {
 
     _jwtIsValid(): string | boolean {
         const token = this.util.localStorage.getItem('sb-clean-blog|token');
+        console.log(token)
 
         if (!token) {
             _isLoggedIn$.next(false);
@@ -94,4 +97,11 @@ export class AuthUtilsService {
         _isLoggedIn$.next(true);
         return token;
     }
+    
+    _storeToken(token: string) {
+    this.util.localStorage.setItem('sb-clean-blog|token',token);
+
 }
+
+}
+ 

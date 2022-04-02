@@ -22,12 +22,15 @@ export class AuthInterceptor implements HttpInterceptor {
         const bearerToken = this.authUtilsService.bearerToken();
 
         if (bearerToken && !_isWhiteListed(request.method, request.url)) {
+            
             request = request.clone({
+                setParams: {'auth': bearerToken},
                 setHeaders: {
                     'Content-Type': 'application/json',
                     Authorization: bearerToken,
                 },
             });
+            console.log(request)
         }
 
         return next.handle(request).pipe(

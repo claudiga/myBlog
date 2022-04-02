@@ -6,6 +6,8 @@ import { User } from '@modules/auth/models';
 import { LoginPayload, TokenResponse } from '@start-bootstrap/sb-clean-blog-shared-types';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
 
 import { AuthUtilsService } from './auth-utils.service';
 
@@ -19,16 +21,32 @@ export class AuthService {
     ) {}
 
     login$(loginPayload: LoginPayload): Observable<boolean> {
-        return this.http
-            .post<TokenResponse>(
-                `${this.configService.config.sbCleanBlogNodeURL}/api/latest/auth/login`,
-                loginPayload
-            )
+
+
+
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyA_1jea7amqdh6sor8qpjHWQf-ckAnkWpM",
+            authDomain: "portfoliof-c75fd.firebaseapp.com",
+            // The value of `databaseURL` depends on the location of the database
+            databaseURL: "https://portfoliof-c75fd-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "portfoliof-c75fd",
+            storageBucket: "portfoliof-c75fd.appspot.com",
+            messagingSenderId: "453637072092",
+     
+          };
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth();
+let authd = signInWithEmailAndPassword(auth, "claudeclodi@hotmail.co.uk", "claudiga")
+
+            return from(authd)
             .pipe(
                 switchMap(
                     (loginResults): Observable<User> =>
-                        this.authUtilsService.processToken$(loginResults.token)
-                ),
+                    {console.log(loginResults)
+                     return this.authUtilsService.processToken$(from(loginResults.user.getIdToken()))
+                    }),
                 switchMap(user => {
                     return from(this.router.navigate(['/']));
                 }),

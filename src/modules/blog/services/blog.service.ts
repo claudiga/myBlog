@@ -38,7 +38,7 @@ export class BlogService {
     }
 
     getPost$(postSlug: string): Observable<Post | null> {
-        const params = new HttpParams().set('findBy', 'slug');
+        const params = new HttpParams()
         return this.http
             .get<ResultsPost>(
                 `${this.configService.config.sbCleanBlogNodeURL}/myblog/posts/${postSlug}.json`,
@@ -46,34 +46,39 @@ export class BlogService {
                     params,
                 }
             )
-            .pipe(map(post => post as Post));
+            .pipe(map(post => post as Post),map(p => {
+                console.log(postSlug)
+                p.id = postSlug
+                return p
+            }))
     }
 
     createPost$(payload: CreatePostPayload): Observable<Post | Error> {
         return this.http
-            .post<ResultsPost>(
+            .post<any>(
                 `${this.configService.config.sbCleanBlogNodeURL}/myblog/posts.json`,
                 payload
             )
             .pipe(
-                tap(response => this.router.navigate([`/${response.slug}`])),
+                tap(response => this.router.navigate([`/${response.name}`])),
                 map(post => post as Post)
             );
     }
 
     updatePost$(post: Post, payload: UpdatePostPayload): Observable<undefined | Error> {
+        console.log(post)
         return this.http
             .put<undefined>(
                 `${this.configService.config.sbCleanBlogNodeURL}/myblog/posts/${post.id}.json`,
                 payload
             )
-            .pipe(tap(response => this.router.navigate([`/${post.slug}`])));
+            .pipe(tap(response => this.router.navigate([`/${post.id}`])));
     }
 
     deletePost$(id: UUID): Observable<undefined | Error> {
         return this.http
             .delete<undefined>(
-                `${this.configService.config.sbCleanBlogNodeURL}/api/latest/posts/${id}`
+                `${this.configService.config.sbCleanBlogNodeURL}/myblog/posts/${id}.json`
             )
             .pipe(tap(response => this.router.navigate([`/`])));
     }
