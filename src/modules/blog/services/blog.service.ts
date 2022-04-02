@@ -25,7 +25,13 @@ export class BlogService {
             .pipe(
                 map(posts =>
                     {console.log(posts)
-                    return Object.keys(posts).reduce((acc,val) => acc.concat(posts[val]),new Array<Post>())
+                    return Object.keys(posts).reduce((acc,val) => {
+
+                        let v = posts[val]
+                        v.id = val
+                        return acc.concat(v)
+                    
+                    },new Array<Post>())
                     })
             );
     }
