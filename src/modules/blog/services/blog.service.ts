@@ -21,7 +21,7 @@ export class BlogService {
 
     getPosts$(): Observable<Post[]> {
         return this.http
-            .get<ResultsPost[]>(`${this.configService.config.sbCleanBlogNodeURL}/api/latest/posts`)
+            .get<ResultsPost[]>(`${this.configService.config.sbCleanBlogNodeURL}/myblog/posts.json`)
             .pipe(
                 map(posts =>
                     (posts as Post[]).map(post => {
@@ -35,7 +35,7 @@ export class BlogService {
         const params = new HttpParams().set('findBy', 'slug');
         return this.http
             .get<ResultsPost>(
-                `${this.configService.config.sbCleanBlogNodeURL}/api/latest/posts/${postSlug}`,
+                `${this.configService.config.sbCleanBlogNodeURL}/myblog/posts/${postSlug}.json`,
                 {
                     params,
                 }
