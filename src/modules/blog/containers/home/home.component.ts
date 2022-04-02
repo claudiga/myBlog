@@ -28,7 +28,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     ) {}
     ngOnInit() {
         this.posts$ = this.blogService.getPosts$();
-        console.log(this.posts$)
         this.subscription.add(
             this.authUtilsService.isLoggedIn$().subscribe(isLoggedIn => {
                 this.isLoggedIn = isLoggedIn;
