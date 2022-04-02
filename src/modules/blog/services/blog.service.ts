@@ -24,8 +24,9 @@ export class BlogService {
             .get<any>(`${this.configService.config.sbCleanBlogNodeURL}/myblog/posts.json`)
             .pipe(
                 map(posts =>
-                    Object.keys(posts).reduce((acc,val) => acc.concat(posts[val]),new Array<Post>())
-                )
+                    {console.log(posts)
+                    return Object.keys(posts).reduce((acc,val) => acc.concat(posts[val]),new Array<Post>())
+                    })
             );
     }
 
