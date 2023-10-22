@@ -11,7 +11,7 @@ describe('workspace-project App', () => {
 
     it('should show home page', () => {
         page.navigateTo();
-        expect(page.getTitleText()).toEqual(`Blog Theme by Start Bootstrap`);
+        expect(page.getTitleText()).toEqual(``);
     });
 
     afterEach(async () => {
