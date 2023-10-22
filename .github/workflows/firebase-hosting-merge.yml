@@ -12,12 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
       - run: node --version
       - run: npm install
-      - run: npm start
+      - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0      
         with:
-          node-version: 16
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTFOLIOF_C75FD }}'
           channelId: live
