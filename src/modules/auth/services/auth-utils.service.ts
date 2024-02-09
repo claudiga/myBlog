@@ -79,7 +79,6 @@ return tokenPayload
 
     _jwtIsValid(): string | boolean {
         const token = this.util.localStorage.getItem('sb-clean-blog|token');
-        console.log(token)
 
         if (!token) {
             _isLoggedIn$.next(false);

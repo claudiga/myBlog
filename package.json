@@ -31,12 +31,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/StartBootstrap/sb-clean-blog-angular.git"
+        "url": "git+https://github.com/claudiga/myBlog.git"
     },
     "bugs": {
-        "url": "https://github.com/StartBootstrap/sb-clean-blog-angular/issues"
+        "url": "https://github.com/claudiga/myBlog/issues"
     },
-    "homepage": "https://github.com/StartBootstrap/sb-clean-blog-angular#readme",
+    "homepage": "https://github.com/claudiga/myBlog#readme",
     "private": true,
     "dependencies": {
         "@angular/animations": "11.0.1",
